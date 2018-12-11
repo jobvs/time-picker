@@ -1,43 +1,63 @@
 import * as React from "react";
 import { hot } from "react-hot-loader";
 
-import TimePicker, { BootstrapStyle } from "./TimePicker";
+import Label from "./Label";
+import TimePicker from "./TimePicker";
 
 export interface TimePickerContainerProps {
-    class: string;
-    style: React.CSSProperties;
-    valueAttribute?: PluginWidget.EditableValue<string>;
-    bootstrapStyle: BootstrapStyle;
-    timepickerType: "badge" | "label";
-    timepickerValue: PluginWidget.DynamicValue<string>;
-    onClickAction: PluginWidget.ActionValue;
+  class: string;
+  style: React.CSSProperties;
+
+  showLabel: boolean;
+  labelCaption: string;
+  labelOrientation: "horizontal" | "vertical";
+  labelWidth: number;
+
+  id: string;
+  tabIndex: number;
+  name: string;
+  format: string;
+  inputValue: PluginWidget.EditableValue<Date>;
+  placeholder: PluginWidget.DynamicValue<string>;
+  onChange?: PluginWidget.ActionValue;
 }
 
-type Handler = () => void;
-
 class TimePickerContainer extends React.Component<TimePickerContainerProps> {
-    private readonly clickHandler: Handler = this.handleOnClick.bind(this);
+  render() {
+    return (
+      <div className={this.props.class} style={this.props.style}>
+        {this.props.showLabel
+          ? this.renderTimePickerWithLabel()
+          : this.renderTimePicker()}
+      </div>
+    );
+  }
 
-    render() {
-        return (
-            <TimePicker
-                    timepickerType={this.props.timepickerType}
-                    bootstrapStyle={this.props.bootstrapStyle}
-                    className={this.props.class}
-                    clickable={!!this.props.onClickAction}
-                    defaultValue={this.props.timepickerValue ? this.props.timepickerValue.value : ""}
-                    onClickAction={this.clickHandler}
-                    style={this.props.style}
-                    value={this.props.valueAttribute ? this.props.valueAttribute.value : ""}>
-            </TimePicker>
-            );
-    }
+  renderTimePickerWithLabel() {
+    return (
+      <Label
+        label={this.props.labelCaption}
+        orientation={this.props.labelOrientation}
+        width={this.props.labelWidth}
+      >
+        {this.renderTimePicker()}
+      </Label>
+    );
+  }
 
-    private handleOnClick() {
-        if (this.props.onClickAction) {
-            this.props.onClickAction.execute();
-        }
-    }
+  renderTimePicker() {
+    return (
+      <TimePicker
+        id={this.props.id}
+        tabIndex={this.props.tabIndex}
+        name={this.props.name}
+        format={this.props.format}
+        inputValue={this.props.inputValue}
+        placeholder={this.props.placeholder}
+        onChange={this.props.onChange}
+      />
+    );
+  }
 }
 
 export default hot(module)(TimePickerContainer);
