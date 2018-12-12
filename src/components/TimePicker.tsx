@@ -1,12 +1,11 @@
 import React from "react";
 import Datetime from "react-datetime";
-import "react-datetime/css/react-datetime.css";
 import moment from "moment";
 
 import "../ui/TimePicker.css";
+import "react-datetime/css/react-datetime.css";
 
 export interface TimePickerProps {
-  id?: string;
   tabIndex?: number;
   name: string;
   format: string;
@@ -73,7 +72,6 @@ class TimePicker extends React.Component<TimePickerProps, State> {
           open={this.state.open}
           inputProps={{
             className: "form-control",
-            id: this.props.id,
             name: this.props.name,
             placeholder: this.props.placeholder.value || "hh:mm AM/PM",
             tabIndex: this.props.tabIndex,

@@ -12,13 +12,13 @@ const Label: React.FunctionComponent<Props> = ({
   width,
   orientation
 }) => {
-  width = width > 11 || width < 1 ? 3 : width;
+  width = width > 10 || width < 1 ? 3 : width;
   const labelWidthClass = orientation === "horizontal" ? `col-sm-${width}` : "";
   const childrenWidthClass =
     orientation === "horizontal" ? `col-sm-${12 - width}` : "";
 
   return (
-    <div className={"form-group"}>
+    <div className="form-group clearfix">
       <label className={`control-label ${labelWidthClass}`}>{label}</label>
       <div className={childrenWidthClass}>{children}</div>
     </div>

@@ -13,7 +13,6 @@ export interface TimePickerContainerProps {
   labelOrientation: "horizontal" | "vertical";
   labelWidth: number;
 
-  id: string;
   tabIndex: number;
   name: string;
   format: string;
@@ -22,7 +21,7 @@ export interface TimePickerContainerProps {
   onChange?: PluginWidget.ActionValue;
 }
 
-class TimePickerContainer extends React.Component<TimePickerContainerProps> {
+export class TimePickerContainer extends React.Component<TimePickerContainerProps> {
   render() {
     return (
       <div className={this.props.class} style={this.props.style}>
@@ -48,7 +47,6 @@ class TimePickerContainer extends React.Component<TimePickerContainerProps> {
   renderTimePicker() {
     return (
       <TimePicker
-        id={this.props.id}
         tabIndex={this.props.tabIndex}
         name={this.props.name}
         format={this.props.format}

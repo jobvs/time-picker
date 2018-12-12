@@ -46,7 +46,7 @@
         <property key="labelWidth" type="integer" defaultValue="3">
             <caption>Horizontal label width</caption>
             <category>Label</category>
-            <description>The width of the horizontal label, which must be a value between 0 and 12</description>
+            <description>The width of the horizontal label, which must be a value between 1 and 10</description>
         </property>
         <property key="onChange" type="action" required="false">
             <caption>On change</caption>
