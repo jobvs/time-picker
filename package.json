@@ -14,7 +14,7 @@
     "start": "webpack-dev-server --hot --open",
     "emit": "tsc",
     "pretest": "tsc && npm run lint && npm run build",
-    "test": "npm run test:unit && npm run test:e2e",
+    "test": "npm run test:unit",
     "test:unit": "jest",
     "test:unit:watch": "jest --watch",
     "test:e2e": "",
