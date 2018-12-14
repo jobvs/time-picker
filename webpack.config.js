@@ -2,8 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-/*const ExtractTextPlugin = require("extract-text-webpack-plugin");*/
-
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 const packageConfig = require("./package");
 const widgetName = packageConfig.widgetName;
@@ -89,6 +88,7 @@ const widgetConfig = {
     mode: "development",
     externals: [ "react", "react-dom" ],
     plugins: [
+        new MomentLocalesPlugin(),
         new ForkTsCheckerWebpackPlugin(),
         new CopyWebpackPlugin(
             [ {
@@ -129,7 +129,10 @@ const previewConfig = {
     },
     mode: "development",
     devtool: "inline-source-map",
-    externals: [ "react", "react-dom" ]
+    externals: [ "react", "react-dom" ],
+    plugins: [
+        new MomentLocalesPlugin()
+    ]
 };
 
 module.exports = [ widgetConfig, previewConfig ];
