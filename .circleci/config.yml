@@ -9,6 +9,8 @@ jobs:
   build:
     docker:
       - image: circleci/node:10.14-browsers
+        environment:
+          TZ: "/usr/share/zoneinfo/Europe/Amsterdam"
 
     steps:
       - checkout
