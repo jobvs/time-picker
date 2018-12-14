@@ -6,6 +6,25 @@
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAABp1BMVEUAAABV//9mzP9LtP9Ms/9Jtv9NsvdJsfpLtPpJsfdJsfhJsvhJsvdKsvdJsPhKsPhJsfdJsPhJsfdIsfhJsfdIsPdJsfhJsfhJsPhJsPhIsfhIsPdJsPdKsPdKsfdNsvdOsvdPs/dQs/dRtPdStPdTtPdUtfdWtvdXtvdauPdcuPdeufdeufhguvhiu/hju/hkvPhmvfhnvfhpvvhrv/huwPhvwfhxwfhywvhzwvh4xfl5xfl6xfl8xvl9xvl9x/mByPmCyfmFyvmGyvmJzPmKzPmLzfmNzvqPzvqQz/qT0PqU0PqU0fqX0vqY0vqa0/qe1fqg1vqj1/uk1/un2fup2vut2/uv3Puw3Puw3fuz3vu13/u23/u34Pu44Pu64fu64fy84vy94vy+4/y/4/zD5fzE5fzG5vzH5vzI5/zK6PzL6PzR6/zT7P3U7P3V7f3W7f3Y7v3Z7v3c8P3e8f3f8f3g8f3i8v3l8/3l9P3n9P3r9v7t9/7u9/7v+P7w+P7x+f7y+f70+v71+v74/P75/P76/f77/f78/f78/v79/v7+/v7////6dMsRAAAAG3RSTlMAAwURGxwhMTNic3SEh4iVp7XBzejt7vH5/f6PsMNWAAABsklEQVR4AWIYfGAUjIJRMAqYuYREJKWJAqLCPGwY+jnFpEkBEryMqPr5pEkFgkwo9kuTDviR/S9GhgFSHAgDuKXJAQIIA4TIMkAcEY4i0mQBVrgBkuQZwA43QJo8wIFhQEhEOIBQOutHJozDOP5Crp4e1RhkJ0tKGJFd6oNEdtmJyEIzpaZl5nrRZgaHM/2Pf5/vwXXfyagXgG93bwSAlEolowLMm9w83gibhXH2gKKVdD67gTnWjwCk+VVjMQS4suSnnjMLRVFc9sAHvAX2A9fySaXNBMbEZVUWscaHIMRuqwBgD8hDEbnsRmfjUKJkAQZGCTlO/xWBwIADQLIZBlY441MvfoF1xlFS/4fy+bzXKh4dgNJE7L3eh3tmtuWa+AMcMIY3dgUvZQpGEYmMw2kD7HC+R29UqyoXLaBd0QZxzgXgikLLDSqJTKU5HOcS0MsbA9jPqtwCRvXm2eorBbNIJBw3KJ9O4Yl+AAXdnyaLt7PWN3jRWLvzmAVp94zO5+n41/onfo/UpExxZqI0O7NQr0DhIq9Io7hQpbRYp7hiobRqo6ByFcNWuY6CUTAKRgEAo8X0lBD3V30AAAAASUVORK5CYII=
     </icon>
     <properties>
+        <property key="timeFormat" type="enumeration" defaultValue="minutes">
+            <caption>Time format</caption>
+            <category>General</category>
+            <description />
+            <enumerationValues>
+                <enumerationValue key="minutes">Minutes</enumerationValue>
+                <enumerationValue key="seconds">Seconds</enumerationValue>
+                <enumerationValue key="milliseconds">Milliseconds</enumerationValue>
+            </enumerationValues>
+        </property>
+        <property key="timeNotation" type="enumeration" defaultValue="h12">
+            <caption>Time notation</caption>
+            <category>General</category>
+            <description />
+            <enumerationValues>
+                <enumerationValue key="h12">12-hour</enumerationValue>
+                <enumerationValue key="h24">24-hour</enumerationValue>
+            </enumerationValues>
+        </property>
         <property key="inputValue" type="attribute" required="true">
             <caption>Attribute (path)</caption>
             <category>General</category>
@@ -14,14 +33,33 @@
                 <attributeType name="DateTime" />
             </attributeTypes>
         </property>
-        <property key="format" type="string" required="true" defaultValue="hh:mm A">
-            <caption>Time format</caption>
+        <property key="editable" type="enumeration" defaultValue="default">
+            <caption>Editable</caption>
             <category>General</category>
             <description />
+            <enumerationValues>
+                <enumerationValue key="default">Default</enumerationValue>
+                <enumerationValue key="never">Never</enumerationValue>
+            </enumerationValues>
         </property>
         <property key="placeholder" type="translatableString" required="false">
             <caption>Placeholder text</caption>
             <category>General</category>
+            <description />
+        </property>
+        <property key="hoursStep" type="integer" defaultValue="1">
+            <caption>Hours step</caption>
+            <category>Constraints</category>
+            <description />
+        </property>
+        <property key="minutesStep" type="integer" defaultValue="1">
+            <caption>Minutes step</caption>
+            <category>Constraints</category>
+            <description />
+        </property>
+        <property key="secondsStep" type="integer" defaultValue="1">
+            <caption>Seconds step</caption>
+            <category>Constraints</category>
             <description />
         </property>
         <property key="showLabel" type="boolean" defaultValue="true">
@@ -50,6 +88,16 @@
         </property>
         <property key="onChange" type="action" required="false">
             <caption>On change</caption>
+            <category>Events</category>
+            <description />
+        </property>
+        <property key="onEnter" type="action" required="false">
+            <caption>On enter</caption>
+            <category>Events</category>
+            <description />
+        </property>
+        <property key="onLeave" type="action" required="false">
+            <caption>On leave</caption>
             <category>Events</category>
             <description />
         </property>

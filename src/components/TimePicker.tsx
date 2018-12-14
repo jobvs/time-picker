@@ -6,91 +6,98 @@ import "../ui/TimePicker.css";
 import "react-datetime/css/react-datetime.css";
 
 export interface TimePickerProps {
-  tabIndex?: number;
   name: string;
-  format: string;
+  tabIndex?: number;
+
+  timeFormat: "minutes" | "seconds" | "milliseconds";
+  timeNotation: "h12" | "h24";
+  timeConstraints: Datetime.TimeConstraints;
   inputValue: PluginWidget.EditableValue<Date>;
+  editable: "default" | "never";
   placeholder: PluginWidget.DynamicValue<string>;
+
   onChange?: PluginWidget.ActionValue;
+  onEnter?: PluginWidget.ActionValue;
+  onLeave?: PluginWidget.ActionValue;
 }
 
 interface State {
   value?: Date;
-  open: boolean;
 }
 
 class TimePicker extends React.Component<TimePickerProps, State> {
   readonly state: State = {
-    value: this.props.inputValue.value,
-    open: false
+    value: this.props.inputValue.value
   };
 
-  handleChange(value: string | moment.Moment) {
-    if (typeof value === "string") {
+  handleChange(input: string | moment.Moment) {
+    if (typeof input === "string") {
       // Invalid input, user might still be typing
       return;
     }
 
-    this.setState(
-      {
-        value: value.toDate()
-      },
-      () => {
-        if (this.props.onChange && this.props.onChange.canExecute) {
-          this.props.onChange.execute();
-        }
+    const value = input.toDate();
+    this.setState({ value }, () => {
+      if (this.props.onChange && this.props.onChange.canExecute) {
+        this.props.onChange.execute();
       }
-    );
+    });
   }
 
-  // handleFocus() {
-  //   this.setState({ open: true });
-  // }
+  handleFocus() {
+    if (this.props.onEnter && this.props.onEnter.canExecute) {
+      this.props.onEnter.execute();
+    }
+  }
 
-  // handleBlur() {
-  //   // This is not working in the current version of react-datetime
-  //   // https://github.com/YouCanBookMe/react-datetime/issues/509
-  //   this.setState({ open: false });
-  // }
-
-  handleButtonClick() {
-    this.setState({ open: !this.state.open });
+  handleBlur() {
+    if (this.props.onLeave && this.props.onLeave.canExecute) {
+      this.props.onLeave.execute();
+    }
   }
 
   render() {
+    const disabled =
+      this.props.editable === "never" || this.props.inputValue.readOnly;
+
     return (
       <div className="widget-timepicker">
         <Datetime
-          className="widget-timepicker-input"
           value={this.state.value}
           onChange={this.handleChange.bind(this)}
-          // onFocus={this.handleFocus.bind(this)}
-          // onBlur={this.handleBlur.bind(this)}
+          onFocus={this.handleFocus.bind(this)}
+          onBlur={this.handleBlur.bind(this)}
           dateFormat={false}
-          timeFormat={this.props.format}
+          timeFormat={timeFormat(
+            this.props.timeNotation,
+            this.props.timeFormat
+          )}
+          timeConstraints={this.props.timeConstraints}
           viewDate={this.state.value || new Date()}
-          open={this.state.open}
           inputProps={{
             className: "form-control",
             name: this.props.name,
-            placeholder: this.props.placeholder.value || "hh:mm AM/PM",
+            placeholder: this.props.placeholder.value,
             tabIndex: this.props.tabIndex,
-            disabled: this.props.inputValue.readOnly
+            disabled
           }}
         />
-        <button
-          type="button"
-          className="btn mx-button widget-timepicker-button"
-          aria-label="Show time picker"
-          tabIndex={-1}
-          disabled={this.props.inputValue.readOnly}
-          onClick={this.handleButtonClick.bind(this)}
-        >
-          <span className="glyphicon glyphicon-time" />
-        </button>
+        <span className="glyphicon glyphicon-time form-control-feedback" aria-hidden="true"></span>
       </div>
     );
   }
+}
+
+export function timeFormat(
+  notation: "h12" | "h24",
+  detail: "minutes" | "seconds" | "milliseconds"
+) {
+  const hourFormat = notation === "h12" ? "hh" : "HH";
+  const seconds = detail === "seconds" ? ":ss" : "";
+  const milliseconds = detail === "milliseconds" ? ":ss.SSS" : "";
+  const suffix = notation === "h12" ? " A" : "";
+
+  return `${hourFormat}:mm${seconds}${milliseconds}${suffix}`;
 }
 
 export default TimePicker;

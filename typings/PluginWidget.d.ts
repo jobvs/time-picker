@@ -47,7 +47,8 @@ declare global {
             value: Option<T>;
             displayValue: string;
             status: ValueStatus;
-            validation: string[];
+            // This is undefined in preview mode
+            validation?: string[];
             readOnly: boolean;
             formatter: ValueFormatter<T>;
             universe?: T[];
