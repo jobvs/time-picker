@@ -21,27 +21,18 @@ export interface TimePickerProps {
   onLeave?: PluginWidget.ActionValue;
 }
 
-interface State {
-  value?: Date;
-}
-
-class TimePicker extends React.Component<TimePickerProps, State> {
-  readonly state: State = {
-    value: this.props.inputValue.value
-  };
-
+class TimePicker extends React.Component<TimePickerProps> {
   handleChange(input: string | moment.Moment) {
     if (typeof input === "string") {
       // Invalid input, user might still be typing
       return;
     }
 
-    const value = input.toDate();
-    this.setState({ value }, () => {
-      if (this.props.onChange && this.props.onChange.canExecute) {
-        this.props.onChange.execute();
-      }
-    });
+    this.props.inputValue.setValue(input.toDate());
+
+    if (this.props.onChange && this.props.onChange.canExecute) {
+      this.props.onChange.execute();
+    }
   }
 
   handleFocus() {
@@ -63,7 +54,7 @@ class TimePicker extends React.Component<TimePickerProps, State> {
     return (
       <div className="widget-timepicker">
         <Datetime
-          value={this.state.value}
+          value={this.props.inputValue.value}
           onChange={this.handleChange.bind(this)}
           onFocus={this.handleFocus.bind(this)}
           onBlur={this.handleBlur.bind(this)}
@@ -73,7 +64,6 @@ class TimePicker extends React.Component<TimePickerProps, State> {
             this.props.timeFormat
           )}
           timeConstraints={this.props.timeConstraints}
-          viewDate={this.state.value || new Date()}
           inputProps={{
             className: "form-control",
             name: this.props.name,
