@@ -6,9 +6,9 @@ import TimePicker from "./TimePicker";
 
 export interface TimePickerContainerProps {
   name: string;
-  class: string;
-  style: React.CSSProperties;
-  tabIndex: number;
+  class?: string;
+  style?: React.CSSProperties;
+  tabIndex?: number;
 
   showLabel: boolean;
   labelCaption: string;
@@ -17,7 +17,7 @@ export interface TimePickerContainerProps {
 
   timeFormat: "minutes" | "seconds" | "milliseconds";
   timeNotation: "h12" | "h24";
-  inputValue: PluginWidget.EditableValue<Date>;
+  inputValue?: PluginWidget.EditableValue<Date>;
   editable: "default" | "never";
   placeholder: PluginWidget.DynamicValue<string>;
 
@@ -30,7 +30,9 @@ export interface TimePickerContainerProps {
   onLeave?: PluginWidget.ActionValue;
 }
 
-export class TimePickerContainer extends React.Component<TimePickerContainerProps> {
+export class TimePickerContainer extends React.Component<
+  TimePickerContainerProps
+> {
   render() {
     return (
       <div className={this.props.class} style={this.props.style}>
@@ -42,7 +44,11 @@ export class TimePickerContainer extends React.Component<TimePickerContainerProp
   }
 
   renderTimePickerWithLabel() {
-    const hasError = this.props.inputValue.validation ? this.props.inputValue.validation.length > 0 : false;
+    const hasError =
+      this.props.inputValue && this.props.inputValue.validation
+        ? this.props.inputValue.validation.length > 0
+        : false;
+
     return (
       <Label
         label={this.props.labelCaption}
@@ -89,9 +95,15 @@ export class TimePickerContainer extends React.Component<TimePickerContainerProp
           onEnter={this.props.onEnter}
           onLeave={this.props.onLeave}
         />
-        {this.props.inputValue.validation && this.props.inputValue.validation.map(message => (
-          <div key={message} className="alert alert-danger mx-validation-message">{message}</div>
-        ))}
+        {this.props.inputValue && this.props.inputValue.validation &&
+          this.props.inputValue.validation.map(message => (
+            <div
+              key={message}
+              className="alert alert-danger mx-validation-message"
+            >
+              {message}
+            </div>
+          ))}
       </>
     );
   }

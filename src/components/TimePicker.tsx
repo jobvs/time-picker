@@ -12,7 +12,7 @@ export interface TimePickerProps {
   timeFormat: "minutes" | "seconds" | "milliseconds";
   timeNotation: "h12" | "h24";
   timeConstraints: Datetime.TimeConstraints;
-  inputValue: PluginWidget.EditableValue<Date>;
+  inputValue?: PluginWidget.EditableValue<Date>;
   editable: "default" | "never";
   placeholder: PluginWidget.DynamicValue<string>;
 
@@ -21,13 +21,25 @@ export interface TimePickerProps {
   onLeave?: PluginWidget.ActionValue;
 }
 
-class TimePicker extends React.Component<TimePickerProps> {
+interface State {
+  invalidInput: boolean;
+}
+
+class TimePicker extends React.Component<TimePickerProps, State> {
+  state: State = {
+    invalidInput: false
+  };
+
   handleChange(input: string | moment.Moment) {
+    if (!this.props.inputValue) return;
+
     if (typeof input === "string") {
-      // Invalid input, user might still be typing
+      this.setState({ invalidInput: true });
       return;
     }
 
+    this.setState({ invalidInput: false });
+    this.props.inputValue.setValidation();
     this.props.inputValue.setValue(input.toDate());
 
     if (this.props.onChange && this.props.onChange.canExecute) {
@@ -42,6 +54,10 @@ class TimePicker extends React.Component<TimePickerProps> {
   }
 
   handleBlur() {
+    if (this.state.invalidInput && this.props.inputValue) {
+      this.props.inputValue.setValidation("Invalid time");
+    }
+
     if (this.props.onLeave && this.props.onLeave.canExecute) {
       this.props.onLeave.execute();
     }
@@ -49,12 +65,12 @@ class TimePicker extends React.Component<TimePickerProps> {
 
   render() {
     const disabled =
-      this.props.editable === "never" || this.props.inputValue.readOnly;
+      this.props.editable === "never" || !this.props.inputValue || this.props.inputValue.readOnly;
 
     return (
       <div className="widget-timepicker">
         <Datetime
-          value={this.props.inputValue.value}
+          value={this.props.inputValue && this.props.inputValue.value}
           onChange={this.handleChange.bind(this)}
           onFocus={this.handleFocus.bind(this)}
           onBlur={this.handleBlur.bind(this)}
@@ -67,7 +83,7 @@ class TimePicker extends React.Component<TimePickerProps> {
           inputProps={{
             className: "form-control",
             name: this.props.name,
-            placeholder: this.props.placeholder.value,
+            placeholder: (!this.props.inputValue ? "No attribute selected" : this.props.placeholder.value),
             tabIndex: this.props.tabIndex,
             disabled
           }}
