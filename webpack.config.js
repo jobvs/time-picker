@@ -56,36 +56,15 @@ const widgetConfig = {
                     }
                 }]
             },
-            /*{
-                test: /\.(sa|sc|c)ss$/, loader: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: "css-loader!sass-loader"
-                })
-            },*/
             {
                 test: /\.(sa|sc|c)ss$/, use: [
-                    "style-loader", "css-loader", "sass-loader"
+                    "style-loader", "css-loader"
                 ]
-            },
-            { test: /\.png$/, loader: "url-loader?limit=100000" },
-            { test: /\.jpg$/, loader: "file-loader" },
-            {
-                test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "url-loader?limit=10000&mimetype=application/font-woff"
-            },
-            {
-                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "url-loader?limit=10000&mimetype=application/octet-stream"
-            },
-            { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader" },
-            {
-                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "url-loader?limit=10000&mimetype=image/svg+xml"
             }
         ]
     },
-    devtool: "eval",
-    mode: "development",
+    // devtool: "eval",
+    mode: "production",
     externals: [ "react", "react-dom" ],
     plugins: [
         new MomentLocalesPlugin(),
@@ -119,16 +98,11 @@ const previewConfig = {
                     "module": "CommonJS",
                 }
             }},
-            { test: /\.css$/, use: "raw-loader" },
-            { test: /\.scss$/, use: [
-                    { loader: "raw-loader" },
-                    { loader: "sass-loader" }
-                ]
-            }
+            { test: /\.css$/, use: "raw-loader" }
         ]
     },
-    mode: "development",
-    devtool: "inline-source-map",
+    mode: "production",
+    // devtool: "inline-source-map",
     externals: [ "react", "react-dom" ],
     plugins: [
         new MomentLocalesPlugin()
