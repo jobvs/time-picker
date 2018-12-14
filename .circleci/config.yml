@@ -1,0 +1,26 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+var_1: &cache_key v1-dependencies-{{ .Branch }}-{{ checksum "package-lock.json" }}-node-10.14
+
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10.14-browsers
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys: *cache_key
+
+      - run: npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: *cache_key
+        
+      - run: npm test
