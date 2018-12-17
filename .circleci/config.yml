@@ -9,32 +9,22 @@ jobs:
     build:
         docker:
             - image: circleci/node:10.14-browsers
-
         steps:
             - checkout
-
             - restore_cache:
                   key: *cache_key
-
             - run: npm ci
-
             - save_cache:
                   paths:
                       - ~/.npm
                       - ~/.cache/Cypress
                   key: *cache_key
-
             - run: npm run test:ci
-
             - store_test_results:
-                  path: output/reports
-
+                  path: output
             - store_artifacts:
-                  path: output/coverage/lcov.info
-                  prefix: tests
-
+                  path: coverage/lcov.info
             - store_artifacts:
                   path: cypress/videos
-
             - store_artifacts:
                   path: cypress/screenshots
