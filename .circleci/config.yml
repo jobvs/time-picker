@@ -16,7 +16,8 @@ jobs:
       - checkout
 
       - restore_cache:
-          keys: *cache_key
+          keys:
+            - *cache_key
 
       - run: npm install
 
