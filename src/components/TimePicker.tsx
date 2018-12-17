@@ -1,11 +1,11 @@
+import moment from "moment";
 import React from "react";
 import Datetime from "react-datetime";
-import moment from "moment";
-
-import "../ui/TimePicker.css";
 import "react-datetime/css/react-datetime.css";
 
-export interface TimePickerProps {
+import "../ui/TimePicker.css";
+
+interface Props {
     name: string;
     tabIndex?: number;
 
@@ -25,13 +25,22 @@ interface State {
     invalidInput: boolean;
 }
 
-class TimePicker extends React.Component<TimePickerProps, State> {
+export class TimePicker extends React.Component<Props, State> {
     state: State = {
         invalidInput: false
     };
 
+    constructor(props: Props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleFocus = this.handleFocus.bind(this);
+        this.handleBlur = this.handleBlur.bind(this);
+    }
+
     handleChange(input: string | moment.Moment) {
-        if (!this.props.inputValue) return;
+        if (!this.props.inputValue) {
+            return;
+        }
 
         if (typeof input === "string") {
             this.setState({ invalidInput: true });
@@ -70,9 +79,9 @@ class TimePicker extends React.Component<TimePickerProps, State> {
             <div className="widget-timepicker">
                 <Datetime
                     defaultValue={this.props.inputValue && this.props.inputValue.value}
-                    onChange={this.handleChange.bind(this)}
-                    onFocus={this.handleFocus.bind(this)}
-                    onBlur={this.handleBlur.bind(this)}
+                    onChange={this.handleChange}
+                    onFocus={this.handleFocus}
+                    onBlur={this.handleBlur}
                     dateFormat={false}
                     timeFormat={timeFormat(this.props.timeNotation, this.props.timeFormat)}
                     timeConstraints={this.props.timeConstraints}
@@ -90,7 +99,7 @@ class TimePicker extends React.Component<TimePickerProps, State> {
     }
 }
 
-export function timeFormat(notation: "h12" | "h24", detail: "minutes" | "seconds" | "milliseconds") {
+function timeFormat(notation: "h12" | "h24", detail: "minutes" | "seconds" | "milliseconds") {
     const hourFormat = notation === "h12" ? "hh" : "HH";
     const seconds = detail === "seconds" ? ":ss" : "";
     const milliseconds = detail === "milliseconds" ? ":ss.SSS" : "";
@@ -98,5 +107,3 @@ export function timeFormat(notation: "h12" | "h24", detail: "minutes" | "seconds
 
     return `${hourFormat}:mm${seconds}${milliseconds}${suffix}`;
 }
-
-export default TimePicker;

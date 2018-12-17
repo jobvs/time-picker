@@ -16,7 +16,7 @@ stories.add(
                 inputValue={createEditableValue(
                     date("Input value", new Date(2018, 0, 1, 1, 0, 0, 0), "General"),
                     boolean("Input readonly", false, "General"),
-                    [ text("Input validation", "Feedback", "General") ]
+                    [text("Input validation", "Feedback", "General")]
                 )}
                 editable={select("Editable", { Default: "default", Never: "never" }, "default", "General")}
                 timeFormat={select(

@@ -1,8 +1,8 @@
 import React from "react";
 import renderer from "react-test-renderer";
 
-import TimePickerContainer, { TimePickerContainerProps } from "../TimePickerContainer";
 import { createActionValue, createDynamicValue, createEditableValue } from "../../__mocks__/PluginWidget";
+import { Props as TimePickerContainerProps, TimePickerContainer } from "../TimePickerContainer";
 
 const setup = (propOverrides: Partial<TimePickerContainerProps>) => {
     const props: TimePickerContainerProps = {

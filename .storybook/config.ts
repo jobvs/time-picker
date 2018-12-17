@@ -9,7 +9,7 @@ addDecorator(checkA11y);
 addDecorator(withKnobs);
 
 function loadStories() {
-  req.keys().forEach(filename => req(filename));
+    req.keys().forEach(filename => req(filename));
 }
 
 configure(loadStories, module);
