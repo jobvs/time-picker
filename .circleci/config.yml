@@ -6,24 +6,24 @@ var_1: &cache_key v1-dependencies-{{ .Branch }}-{{ checksum "package-lock.json" 
 
 version: 2
 jobs:
-  build:
-    docker:
-      - image: circleci/node:10.14-browsers
-        environment:
-          TZ: "/usr/share/zoneinfo/Europe/Amsterdam"
+    build:
+        docker:
+            - image: circleci/node:10.14-browsers
+              environment:
+                  TZ: "/usr/share/zoneinfo/Europe/Amsterdam"
 
-    steps:
-      - checkout
+        steps:
+            - checkout
 
-      - restore_cache:
-          keys:
-            - *cache_key
+            - restore_cache:
+                  key: *cache_key
 
-      - run: npm install
+            - run: npm ci
 
-      - save_cache:
-          paths:
-            - node_modules
-          key: *cache_key
-        
-      - run: npm test
+            - save_cache:
+                  paths:
+                      - ~/.npm
+                      - ~/.cache
+                  key: *cache_key
+
+            - run: npm test

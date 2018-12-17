@@ -37,7 +37,7 @@ exports[`TimePicker label should render a horizontal label 1`] = `
             placeholder="Placeholder"
             tabIndex={0}
             type="text"
-            value="02:23:16.784 PM"
+            value="01:02:03.456 AM"
           />
           <div
             className="rdtPicker"
@@ -65,7 +65,7 @@ exports[`TimePicker label should render a horizontal label 1`] = `
                           <div
                             className="rdtCount"
                           >
-                            2
+                            1
                           </div>
                           <span
                             className="rdtBtn"
@@ -93,7 +93,7 @@ exports[`TimePicker label should render a horizontal label 1`] = `
                           <div
                             className="rdtCount"
                           >
-                            23
+                            02
                           </div>
                           <span
                             className="rdtBtn"
@@ -121,7 +121,7 @@ exports[`TimePicker label should render a horizontal label 1`] = `
                           <div
                             className="rdtCount"
                           >
-                            16
+                            03
                           </div>
                           <span
                             className="rdtBtn"
@@ -144,7 +144,7 @@ exports[`TimePicker label should render a horizontal label 1`] = `
                           <div
                             className="rdtCount"
                           >
-                            PM
+                            AM
                           </div>
                           <span
                             className="rdtBtn"
@@ -165,7 +165,7 @@ exports[`TimePicker label should render a horizontal label 1`] = `
                           <input
                             onChange={[Function]}
                             type="text"
-                            value="784"
+                            value="456"
                           />
                         </div>
                       </div>
@@ -223,7 +223,7 @@ exports[`TimePicker label should render a horizontal label with a specified widt
             placeholder="Placeholder"
             tabIndex={0}
             type="text"
-            value="02:23:16.784 PM"
+            value="01:02:03.456 AM"
           />
           <div
             className="rdtPicker"
@@ -251,7 +251,7 @@ exports[`TimePicker label should render a horizontal label with a specified widt
                           <div
                             className="rdtCount"
                           >
-                            2
+                            1
                           </div>
                           <span
                             className="rdtBtn"
@@ -279,7 +279,7 @@ exports[`TimePicker label should render a horizontal label with a specified widt
                           <div
                             className="rdtCount"
                           >
-                            23
+                            02
                           </div>
                           <span
                             className="rdtBtn"
@@ -307,7 +307,7 @@ exports[`TimePicker label should render a horizontal label with a specified widt
                           <div
                             className="rdtCount"
                           >
-                            16
+                            03
                           </div>
                           <span
                             className="rdtBtn"
@@ -330,7 +330,7 @@ exports[`TimePicker label should render a horizontal label with a specified widt
                           <div
                             className="rdtCount"
                           >
-                            PM
+                            AM
                           </div>
                           <span
                             className="rdtBtn"
@@ -351,7 +351,7 @@ exports[`TimePicker label should render a horizontal label with a specified widt
                           <input
                             onChange={[Function]}
                             type="text"
-                            value="784"
+                            value="456"
                           />
                         </div>
                       </div>
@@ -409,7 +409,7 @@ exports[`TimePicker label should render a vertical label 1`] = `
             placeholder="Placeholder"
             tabIndex={0}
             type="text"
-            value="02:23:16.784 PM"
+            value="01:02:03.456 AM"
           />
           <div
             className="rdtPicker"
@@ -437,7 +437,7 @@ exports[`TimePicker label should render a vertical label 1`] = `
                           <div
                             className="rdtCount"
                           >
-                            2
+                            1
                           </div>
                           <span
                             className="rdtBtn"
@@ -465,7 +465,7 @@ exports[`TimePicker label should render a vertical label 1`] = `
                           <div
                             className="rdtCount"
                           >
-                            23
+                            02
                           </div>
                           <span
                             className="rdtBtn"
@@ -493,7 +493,7 @@ exports[`TimePicker label should render a vertical label 1`] = `
                           <div
                             className="rdtCount"
                           >
-                            16
+                            03
                           </div>
                           <span
                             className="rdtBtn"
@@ -516,7 +516,7 @@ exports[`TimePicker label should render a vertical label 1`] = `
                           <div
                             className="rdtCount"
                           >
-                            PM
+                            AM
                           </div>
                           <span
                             className="rdtBtn"
@@ -537,7 +537,7 @@ exports[`TimePicker label should render a vertical label 1`] = `
                           <input
                             onChange={[Function]}
                             type="text"
-                            value="784"
+                            value="456"
                           />
                         </div>
                       </div>
@@ -595,7 +595,7 @@ exports[`TimePicker label should render with a different caption 1`] = `
             placeholder="Placeholder"
             tabIndex={0}
             type="text"
-            value="02:23:16.784 PM"
+            value="01:02:03.456 AM"
           />
           <div
             className="rdtPicker"
@@ -623,7 +623,7 @@ exports[`TimePicker label should render with a different caption 1`] = `
                           <div
                             className="rdtCount"
                           >
-                            2
+                            1
                           </div>
                           <span
                             className="rdtBtn"
@@ -651,7 +651,7 @@ exports[`TimePicker label should render with a different caption 1`] = `
                           <div
                             className="rdtCount"
                           >
-                            23
+                            02
                           </div>
                           <span
                             className="rdtBtn"
@@ -679,7 +679,7 @@ exports[`TimePicker label should render with a different caption 1`] = `
                           <div
                             className="rdtCount"
                           >
-                            16
+                            03
                           </div>
                           <span
                             className="rdtBtn"
@@ -702,7 +702,7 @@ exports[`TimePicker label should render with a different caption 1`] = `
                           <div
                             className="rdtCount"
                           >
-                            PM
+                            AM
                           </div>
                           <span
                             className="rdtBtn"
@@ -723,7 +723,7 @@ exports[`TimePicker label should render with a different caption 1`] = `
                           <input
                             onChange={[Function]}
                             type="text"
-                            value="784"
+                            value="456"
                           />
                         </div>
                       </div>
@@ -770,7 +770,7 @@ exports[`TimePicker should render 24-hour notation 1`] = `
         placeholder="Placeholder"
         tabIndex={0}
         type="text"
-        value="14:23:16.784"
+        value="01:02:03.456"
       />
       <div
         className="rdtPicker"
@@ -798,7 +798,7 @@ exports[`TimePicker should render 24-hour notation 1`] = `
                       <div
                         className="rdtCount"
                       >
-                        14
+                        1
                       </div>
                       <span
                         className="rdtBtn"
@@ -826,7 +826,7 @@ exports[`TimePicker should render 24-hour notation 1`] = `
                       <div
                         className="rdtCount"
                       >
-                        23
+                        02
                       </div>
                       <span
                         className="rdtBtn"
@@ -854,7 +854,7 @@ exports[`TimePicker should render 24-hour notation 1`] = `
                       <div
                         className="rdtCount"
                       >
-                        16
+                        03
                       </div>
                       <span
                         className="rdtBtn"
@@ -875,7 +875,7 @@ exports[`TimePicker should render 24-hour notation 1`] = `
                       <input
                         onChange={[Function]}
                         type="text"
-                        value="784"
+                        value="456"
                       />
                     </div>
                   </div>
@@ -920,7 +920,7 @@ exports[`TimePicker should render the structure 1`] = `
         placeholder="Placeholder"
         tabIndex={0}
         type="text"
-        value="02:23:16.784 PM"
+        value="01:02:03.456 AM"
       />
       <div
         className="rdtPicker"
@@ -948,7 +948,7 @@ exports[`TimePicker should render the structure 1`] = `
                       <div
                         className="rdtCount"
                       >
-                        2
+                        1
                       </div>
                       <span
                         className="rdtBtn"
@@ -976,7 +976,7 @@ exports[`TimePicker should render the structure 1`] = `
                       <div
                         className="rdtCount"
                       >
-                        23
+                        02
                       </div>
                       <span
                         className="rdtBtn"
@@ -1004,7 +1004,7 @@ exports[`TimePicker should render the structure 1`] = `
                       <div
                         className="rdtCount"
                       >
-                        16
+                        03
                       </div>
                       <span
                         className="rdtBtn"
@@ -1027,7 +1027,7 @@ exports[`TimePicker should render the structure 1`] = `
                       <div
                         className="rdtCount"
                       >
-                        PM
+                        AM
                       </div>
                       <span
                         className="rdtBtn"
@@ -1048,7 +1048,7 @@ exports[`TimePicker should render the structure 1`] = `
                       <input
                         onChange={[Function]}
                         type="text"
-                        value="784"
+                        value="456"
                       />
                     </div>
                   </div>
