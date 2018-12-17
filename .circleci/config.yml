@@ -20,6 +20,7 @@ jobs:
                       - ~/.cache/Cypress
                   key: *cache_key
             - run: npm run test:ci
+            - run: bash <(curl -s https://codecov.io/bash)
             - store_test_results:
                   path: output
             - store_artifacts:
