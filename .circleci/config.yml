@@ -9,8 +9,6 @@ jobs:
     build:
         docker:
             - image: circleci/node:10.14-browsers
-              environment:
-                  TZ: "/usr/share/zoneinfo/Europe/Amsterdam"
 
         steps:
             - checkout
@@ -23,7 +21,20 @@ jobs:
             - save_cache:
                   paths:
                       - ~/.npm
-                      - ~/.cache
+                      - ~/.cache/Cypress
                   key: *cache_key
 
-            - run: npm test
+            - run: npm run test:ci
+
+            - store_test_results:
+                  path: output/reports
+
+            - store_artifacts:
+                  path: output/coverage/lcov.info
+                  prefix: tests
+
+            - store_artifacts:
+                  path: cypress/videos
+
+            - store_artifacts:
+                  path: cypress/screenshots
