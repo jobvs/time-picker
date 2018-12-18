@@ -3,7 +3,7 @@ export function createEditableValue<T>(
     readOnly: boolean,
     validation: string[]
 ): PluginWidget.EditableValue<T> {
-    return {
+    const obj = {
         value,
         displayValue: "display",
         status: PluginWidget.ValueStatus.Available,
@@ -11,11 +11,12 @@ export function createEditableValue<T>(
         readOnly,
         formatter: null,
         universe: [],
-        setValue: () => null,
+        setValue: (newValue: T) => (obj.value = newValue),
         setTextValue: () => null,
         setFormatting: () => null,
-        setValidation: () => null
+        setValidation: (message?: string) => (obj.validation = message ? [message] : [])
     };
+    return obj;
 }
 
 export function createDynamicValue<T>(value: T): PluginWidget.DynamicValue<T> {

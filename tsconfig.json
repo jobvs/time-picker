@@ -23,5 +23,5 @@
         "noUnusedParameters": true,
         "jsx": "react"
     },
-    "include": ["src", "typings"]
+    "exclude": ["node_modules", "cypress"]
 }

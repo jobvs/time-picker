@@ -18,7 +18,11 @@ const deploymentFolder = projectPath ? path.join(projectPath, "/deployment/web/w
 
 let stat = null;
 if (!projectPath) {
-    gutil.log(`${banner()} No testproject defined, only copying files to dist/build folder. Set project path in ${gutil.colors.blue("widget.path")} in ${gutil.colors.magenta("package.json")}`);
+    gutil.log(
+        `${banner()} No testproject defined, only copying files to dist/build folder. Set project path in ${gutil.colors.blue(
+            "widget.path"
+        )} in ${gutil.colors.magenta("package.json")}`
+    );
 } else {
     gutil.log(`${banner()} Testproject defined: ${gutil.colors.magenta(projectPath)}`);
     try {
@@ -33,12 +37,15 @@ if (!projectPath) {
 // Helper functions
 
 const runWebpack = callback => {
-    webpack(require("./webpack.config.js"), function (err, stats) {
+    webpack(require("./webpack.config.js"), function(err, stats) {
         if (err) throw new gutil.PluginError("webpack", err);
-        gutil.log(banner("blue", "WEBPACK"), stats.toString({
-            colors: true,
-            modules: false
-        }));
+        gutil.log(
+            banner("blue", "WEBPACK"),
+            stats.toString({
+                colors: true,
+                modules: false
+            })
+        );
         callback && callback();
     });
 };
@@ -54,68 +61,81 @@ const copyFile = paths => {
 const getPaths = (file, srcFolder, destFolder) => {
     return {
         src: path.join(__dirname, srcFolder, file.relative),
-        dest: path.join(destFolder, file.relative),
-    }
-}
+        dest: path.join(destFolder, file.relative)
+    };
+};
 
 gulp.task("watch:src", () => {
-    return watch("src/**/*", {
-        verbose: true
-    }, () => {
-        gulp.start("build");
-    })
+    return watch(
+        "src/**/*",
+        {
+            verbose: true
+        },
+        () => {
+            gulp.start("build");
+        }
+    );
 });
 
 gulp.task("watch:build", () => {
-    return watch("build/**/*", {
-        verbose: stat !== null,
-        read: false
-    }, file => {
-        if (stat !== null) {
-            const paths = getPaths(file, "build", deploymentFolder);
-            if (paths.src.indexOf("package.xml") !== -1) {
-                return;
+    return watch(
+        "build/**/*",
+        {
+            verbose: stat !== null,
+            read: false
+        },
+        file => {
+            if (stat !== null) {
+                const paths = getPaths(file, "build", deploymentFolder);
+                if (paths.src.indexOf("package.xml") !== -1) {
+                    return;
+                }
+                copyFile(paths);
             }
-            copyFile(paths);
         }
-    })
+    );
 });
 
 gulp.task("compress", function() {
-  return gulp
-    .src("./dist/tmp/widgets/**/*")
-    .pipe(zip(pkg.widgetName + ".mpk"))
-    .pipe(gulp.dest(widgetsFolder))
-    .pipe(gulp.dest("./dist/" + pkg.version));
+    return gulp
+        .src("./dist/tmp/widgets/**/*")
+        .pipe(zip(pkg.config.widgetName + ".mpk"))
+        .pipe(gulp.dest(widgetsFolder))
+        .pipe(gulp.dest("./dist/" + pkg.version));
 });
 
 gulp.task("copyDistDeployment", function() {
-    return gulp
-        .src("./dist/tmp/widgets/**/*")
-        .pipe(gulp.dest(`${pkg.config.projectPath}/deployment/web/widgets`));
+    return gulp.src("./dist/tmp/widgets/**/*").pipe(gulp.dest(`${pkg.config.projectPath}/deployment/web/widgets`));
 });
 
 gulp.task("watch:dist", () => {
-    return watch(`dist/${pkg.version}/*.mpk`, {
-        verbose: stat !== null,
-        read: false
-    }, file => {
-        if (stat !== null) {
-            const paths = getPaths(file, `dist/${pkg.version}`, widgetsFolder);
-            copyFile(paths);
+    return watch(
+        `dist/${pkg.version}/*.mpk`,
+        {
+            verbose: stat !== null,
+            read: false
+        },
+        file => {
+            if (stat !== null) {
+                const paths = getPaths(file, `dist/${pkg.version}`, widgetsFolder);
+                copyFile(paths);
+            }
         }
-    })
+    );
 });
 
 gulp.task("clean", `Cleanup the dist/build`, () => {
-    return del([
-        "./dist/" + pkg.version + "/*",
-        "./dist/tmp/**/*",
-        "./dist/tsc/**/*",
-        "./dist/testresults/**/*",
-        `${pkg.config.projectPath}/deployment/web/widgets/*`,
-        widgetsFolder + "/" + pkg.widgetName + ".mpk"
-    ], { force: true });
+    return del(
+        [
+            "./dist/" + pkg.version + "/*",
+            "./dist/tmp/**/*",
+            "./dist/tsc/**/*",
+            "./dist/testresults/**/*",
+            `${pkg.config.projectPath}/deployment/web/widgets/*`,
+            widgetsFolder + "/" + pkg.config.widgetName + ".mpk"
+        ],
+        { force: true }
+    );
 });
 
 // Final tasks
@@ -124,6 +144,8 @@ gulp.task("build", "Build the widget", done => {
     sequence("clean", "build-dist", "compress", "copyDistDeployment", done);
 });
 
-gulp.task("build-dist", callback => { runWebpack(callback); });
+gulp.task("build-dist", callback => {
+    runWebpack(callback);
+});
 
-gulp.task("default", sequence("build", "watch:src", "watch:build", "watch:dist" ));
+gulp.task("default", sequence("build", "watch:src", "watch:build", "watch:dist"));

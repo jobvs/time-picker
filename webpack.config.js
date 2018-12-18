@@ -11,7 +11,7 @@ const name = packageConfig.widgetName.toLowerCase();
 const host = "http://localhost:8080";
 
 const widgetConfig = {
-    entry: `./src/components/${widgetName}Container.tsx`,
+    entry: `./src/components/${widgetName}.tsx`,
     output: {
         path: path.resolve(__dirname, "dist/tmp"),
         filename: `widgets/${packageConfig.packagePath}/${name}/${widgetName}.js`,

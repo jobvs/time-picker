@@ -1,10 +1,10 @@
 import React from "react";
-import TimePickerContainer, { Props as TimePickerContainerProps } from "./components/TimePickerContainer";
+import TimePicker, { Props as TimePickerProps } from "./components/TimePicker";
 
 // tslint:disable-next-line class-name
-export class preview extends React.Component<TimePickerContainerProps, {}> {
+export class preview extends React.Component<TimePickerProps, {}> {
     render() {
-        return <TimePickerContainer {...this.props} />;
+        return <TimePicker {...this.props} />;
     }
 }
 

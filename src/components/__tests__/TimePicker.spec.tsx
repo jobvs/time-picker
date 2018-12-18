@@ -2,10 +2,10 @@ import React from "react";
 import renderer from "react-test-renderer";
 
 import { createActionValue, createDynamicValue, createEditableValue } from "../../__mocks__/PluginWidget";
-import { Props as TimePickerContainerProps, TimePickerContainer } from "../TimePickerContainer";
+import { Props as TimePickerProps, TimePicker } from "../TimePicker";
 
-const setup = (propOverrides: Partial<TimePickerContainerProps>) => {
-    const props: TimePickerContainerProps = {
+const setup = (propOverrides: Partial<TimePickerProps>) => {
+    const props: TimePickerProps = {
         inputValue: createEditableValue(new Date(2018, 0, 1, 1, 2, 3, 456), false, []),
         editable: "default",
         timeFormat: "milliseconds",
@@ -28,7 +28,7 @@ const setup = (propOverrides: Partial<TimePickerContainerProps>) => {
         ...propOverrides
     };
 
-    return renderer.create(<TimePickerContainer {...props} />);
+    return renderer.create(<TimePicker {...props} />);
 };
 
 describe("TimePicker", () => {

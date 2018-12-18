@@ -6,8 +6,7 @@
     "license": "Apache-2.0",
     "config": {
         "widgetName": "TimePicker",
-        "widgetPath": "..//widgets",
-        "projectPath": "..//",
+        "projectPath": "/Users/job.van.stiphout/Documents/Mendix/Timepicker-main",
         "packagePath": "mendix"
     },
     "scripts": {
