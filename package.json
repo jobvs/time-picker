@@ -2,9 +2,9 @@
     "name": "timepicker",
     "widgetName": "TimePicker",
     "version": "1.0.0",
-    "description": "Time picker widget",
-    "copyright": "Mendix 2018",
-    "author": "jobvs",
+    "description": "Input widget to select a time value",
+    "copyright": "Mendix BV",
+    "license": "Apache-2.0",
     "config": {
         "widgetPath": "..//widgets",
         "projectPath": "..//"
@@ -39,7 +39,7 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/mendixlabs/time-picker"
+        "url": "https://github.com/jobvs/time-picker"
     },
     "devDependencies": {
         "@cypress/webpack-preprocessor": "^4.0.2",
