@@ -1,15 +1,15 @@
 {
     "name": "timepicker",
-    "widgetName": "TimePicker",
     "version": "1.0.0",
     "description": "Input widget to select a time value",
     "copyright": "Mendix BV",
     "license": "Apache-2.0",
     "config": {
+        "widgetName": "TimePicker",
         "widgetPath": "..//widgets",
-        "projectPath": "..//"
+        "projectPath": "..//",
+        "packagePath": "mendix"
     },
-    "packagePath": "mendix",
     "scripts": {
         "start": "npm run storybook",
         "widget:watch": "webpack-dev-server --hot --open",

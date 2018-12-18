@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const MomentLocalesPlugin = require("moment-locales-webpack-plugin");
 
-const packageConfig = require("./package");
+const packageConfig = require("./package").config;
 const widgetName = packageConfig.widgetName;
 const name = packageConfig.widgetName.toLowerCase();
 
