@@ -30,7 +30,8 @@
         "lint:format": "prettier --write '{src,cypress,stories,.storybook,.circleci}/**/*.{ts,tsx,js,css,json,yml}'",
         "storybook": "start-storybook -p 6006",
         "storybook:e2e": "start-storybook -p 6006 --ci",
-        "storybook:build": "build-storybook"
+        "storybook:build": "build-storybook",
+        "storybook:deploy": "storybook-to-ghpages --ci"
     },
     "pre-commit": [
         "emit",
@@ -47,6 +48,7 @@
         "@storybook/addon-knobs": "^4.1.1",
         "@storybook/addons": "^4.1.1",
         "@storybook/react": "^4.1.1",
+        "@storybook/storybook-deployer": "^2.8.1",
         "@types/jest": "^23.3.10",
         "@types/node": "^10.12.15",
         "@types/react": "^16.7.17",

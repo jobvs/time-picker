@@ -1,12 +1,16 @@
+[![Storybook](https://github.com/storybooks/press/blob/master/badges/storybook.svg)](https://jobvs.github.io/time-picker)
+[![CircleCI](https://circleci.com/gh/jobvs/time-picker.svg?style=shield)](https://circleci.com/gh/jobvs/time-picker)
+[![codecov](https://codecov.io/gh/jobvs/time-picker/branch/master/graph/badge.svg)](https://codecov.io/gh/jobvs/time-picker)
+
 ## TimePicker
 
-Input 
+Input widget to select a time value
 
 ## Features
 
- * Change the formatting of the selected time
- * Execute an action after change
- * Add a label and label width
+-   Change the notation of the selected time
+-   Execute actions on enter, on change, and on leave
+-   Add a label to the input
 
 ## Dependencies
 
@@ -16,11 +20,11 @@ Mendix 7.13.1
 
 Place the widget in the context of an object that has a value attribute.
 
-## Demo project
+## Demo
 
-[https://time-picker.mxapps.io/](https://time-picker.mxapps.io/)
+[https://jobvs.github.io/time-picker](https://jobvs.github.io/time-picker)
 
 ## Issues, suggestions and feature requests
 
-We are actively maintaining this widget, please report any issues or suggestion for improvement at
-https://github.com/mendixlabs/time-picker/issues.
+We are actively maintaining this widget, please report any issues or suggestions for improvement at
+https://github.com/jobvs/time-picker/issues.
