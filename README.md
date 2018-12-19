@@ -1,6 +1,5 @@
 [![Storybook](https://github.com/storybooks/press/blob/master/badges/storybook.svg)](https://jobvs.github.io/time-picker)
 [![CircleCI](https://circleci.com/gh/jobvs/time-picker.svg?style=shield)](https://circleci.com/gh/jobvs/time-picker)
-[![codecov](https://codecov.io/gh/jobvs/time-picker/branch/master/graph/badge.svg)](https://codecov.io/gh/jobvs/time-picker)
 
 ## TimePicker
 
