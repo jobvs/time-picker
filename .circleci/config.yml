@@ -26,7 +26,6 @@ jobs:
             - run: npm ci
             - save_cache: *save_cache
             - run: npm run test:ci
-            - run: bash <(curl -s https://codecov.io/bash)
             - store_test_results:
                   path: output
             - store_artifacts:
@@ -49,10 +48,7 @@ workflows:
     version: 2
     build-deploy:
         jobs:
-            - build:
-                  filters:
-                      branches:
-                          ignore: gh-pages
+            - build
             - deploy:
                   requires:
                       - build

@@ -4,6 +4,10 @@
     "description": "Input widget to select a time value",
     "copyright": "Mendix BV",
     "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jobvs/time-picker"
+    },
     "config": {
         "widgetName": "TimePicker",
         "projectPath": "/Users/job.van.stiphout/Documents/Mendix/Timepicker-main",
@@ -36,9 +40,8 @@
         "emit",
         "lint"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/jobvs/time-picker"
+    "storybook-deployer": {
+        "commitMessage": "Deploy Storybook to GitHub Pages [skip ci]"
     },
     "devDependencies": {
         "@cypress/webpack-preprocessor": "^4.0.2",
