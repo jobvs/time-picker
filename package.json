@@ -25,7 +25,7 @@
         "unit:ci": "jest --ci --runInBand",
         "unit:watch": "jest --watch",
         "e2e": "start-server-and-test storybook:e2e http://localhost:6006 e2e:run",
-        "e2e:run": "cypress run",
+        "e2e:run": "cypress run && cypress run --env suite=mobile",
         "e2e:open": "cypress open",
         "emit": "tsc",
         "lint": "tslint -p tsconfig.json",

@@ -4,5 +4,6 @@
     "reporter": "junit",
     "reporterOptions": {
         "mochaFile": "output/cypress/results.xml"
-    }
+    },
+    "trashAssetsBeforeRuns": false
 }

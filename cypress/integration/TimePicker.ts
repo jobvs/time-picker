@@ -20,9 +20,37 @@ describe("TimePicker", () => {
         });
 
         it("should emit an onEnter event", () => {
-            addEmitActionSpy();
+            cy.addEmitActionSpy();
             cy.get("button").click();
-            getEmittedActionName().should("equal", "onEnter");
+            cy.getEmittedActionName().should("equal", "onEnter");
+        });
+
+        it("should not emit onEnter when switching between button and text input", () => {
+            cy.get("button").click();
+            cy.addEmitActionSpy();
+            cy.get("input").focus();
+            cy.get("button").click();
+            cy.get<sinon.SinonSpy>("@emitAction").should("not.be.called");
+        });
+
+        it("esc should close the picker", () => {
+            cy.get("button").click();
+            cy.get(".rdtPicker").should("be.visible");
+            cy.get(".widget-time-picker").type("{esc}");
+            cy.get(".rdtPicker").should("not.be.visible");
+        });
+    });
+
+    describe("on input focus", () => {
+        it("should not show the time picker", () => {
+            cy.get("input").focus();
+            cy.get(".rdtPicker").should("not.be.visible");
+        });
+
+        it("should emit an onEnter event", () => {
+            cy.addEmitActionSpy();
+            cy.get("input").focus();
+            cy.getEmittedActionName().should("equal", "onEnter");
         });
     });
 
@@ -35,9 +63,9 @@ describe("TimePicker", () => {
 
         it("should emit an onLeave event", () => {
             cy.get("input").focus();
-            addEmitActionSpy();
+            cy.addEmitActionSpy();
             cy.get("body").click("topRight");
-            getEmittedActionName().should("equal", "onLeave");
+            cy.getEmittedActionName().should("equal", "onLeave");
         });
     });
 
@@ -50,9 +78,9 @@ describe("TimePicker", () => {
 
         it("should emit an onChange event", () => {
             cy.get("button").click();
-            addEmitActionSpy();
+            cy.addEmitActionSpy();
             cy.get(".rdtCounter:nth-of-type(1) .rdtBtn:first-child").click();
-            getEmittedActionName().should("equal", "onChange");
+            cy.getEmittedActionName().should("equal", "onChange");
         });
     });
 
@@ -61,7 +89,9 @@ describe("TimePicker", () => {
             cy.get("input").type("asd");
             cy.get(".alert-danger").should("not.exist");
             cy.get("body").click("topRight");
-            cy.get(".alert-danger").should("be.visible");
+            cy.get(".alert-danger")
+                .should("be.visible")
+                .should("contain", "HH:mm");
         });
 
         it("empty input should not show an error", () => {
@@ -80,18 +110,3 @@ describe("TimePicker", () => {
         });
     });
 });
-
-function addEmitActionSpy() {
-    cy.window()
-        .then(window =>
-            cy.spy((window as any).__STORYBOOK_ADDONS_CHANNEL__, "emit").withArgs("storybook/actions/action-event")
-        )
-        .as("emitAction");
-}
-
-function getEmittedActionName() {
-    return cy
-        .get<sinon.SinonSpy>("@emitAction")
-        .should("be.calledOnce")
-        .then(spy => spy.args[0] && spy.args[0][1].data.name);
-}
