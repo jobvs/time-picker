@@ -1,7 +1,7 @@
 import moment from "moment";
 import React from "react";
 import Datetime from "react-datetime";
-import { hot } from "react-hot-loader";
+import { hot } from "react-hot-loader/root";
 
 import "react-datetime/css/react-datetime.css";
 
@@ -37,41 +37,37 @@ export class TimePicker extends React.Component<Props, State> {
     private readonly use12HourNotation = use12HourNotation();
     private readonly useNativeInput = useNativeInput(this.props);
 
+    private readonly onChangeHandler = this.onChange.bind(this);
+    private readonly onFocusHandler = this.onFocus.bind(this);
+    private readonly queueBlurHandler = this.queueBlur.bind(this);
+    private readonly onButtonClickHandler = this.onButtonClick.bind(this);
+    private readonly onKeyUpHandler = this.onKeyUp.bind(this);
+
     private blurTimeoutRef: number | undefined;
 
-    constructor(props: Props) {
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleFocus = this.handleFocus.bind(this);
-        this.queueBlur = this.queueBlur.bind(this);
-        this.handleBlur = this.handleBlur.bind(this);
-        this.handleButtonClick = this.handleButtonClick.bind(this);
-        this.handleKeyDown = this.handleKeyDown.bind(this);
-    }
-
-    get value() {
+    get value(): Date | undefined {
         return this.props.inputValue && this.props.inputValue.value;
     }
 
-    get validation() {
+    get validation(): string[] {
         return (this.props.inputValue && this.props.inputValue.validation) || [];
     }
 
-    get disabled() {
+    get disabled(): boolean {
         return this.props.editable === "never" || !this.props.inputValue || this.props.inputValue.readOnly;
     }
 
-    get placeholder() {
+    get placeholder(): string {
         return !this.props.inputValue
             ? "No attribute selected"
             : this.props.placeholder.value || humanReadableFormat(this.format);
     }
 
-    get format() {
+    get format(): string {
         return timeFormat(this.props.timeFormat, this.use12HourNotation);
     }
 
-    handleFocus() {
+    onFocus(): void {
         const alreadyFocused = this.blurTimeoutRef !== undefined;
 
         if (alreadyFocused) {
@@ -82,21 +78,20 @@ export class TimePicker extends React.Component<Props, State> {
         }
     }
 
-    queueBlur() {
+    queueBlur(): void {
         if (this.blurTimeoutRef === undefined) {
             this.blurTimeoutRef = setTimeout(() => {
                 this.blurTimeoutRef = undefined;
-                this.handleBlur();
+                this.onBlur();
             }, 0);
         }
     }
 
-    handleBlur() {
+    onBlur(): void {
         if (this.state.invalidInput && this.props.inputValue) {
             const format = humanReadableFormat(this.format);
-            this.props.inputValue.setValidation(
-                `${this.props.validationMessage.value || "Expected format:"} ${format}`
-            );
+            const message = `${this.props.validationMessage.value || "Expected format:"} ${format}`;
+            this.props.inputValue.setValidation(message);
             this.setState({ invalidInput: true });
         }
 
@@ -107,15 +102,15 @@ export class TimePicker extends React.Component<Props, State> {
         this.dispatchAction("onLeave");
     }
 
-    handleChange(input: string | moment.Moment) {
+    onChange(input: string | moment.Moment): void {
         if (typeof input === "string") {
-            this.handleStringInput(input);
+            this.processStringInput(input);
         } else {
             this.setValue(input.toDate());
         }
     }
 
-    handleStringInput(value: string) {
+    private processStringInput(value: string): void {
         const invalidInput = value.length > 0;
 
         if (invalidInput) {
@@ -125,7 +120,7 @@ export class TimePicker extends React.Component<Props, State> {
         }
     }
 
-    private setValue(value: Date | undefined) {
+    private setValue(value: Date | undefined): void {
         if (!this.props.inputValue) {
             return;
         }
@@ -136,30 +131,30 @@ export class TimePicker extends React.Component<Props, State> {
         this.dispatchAction("onChange");
     }
 
-    handleButtonClick() {
+    onButtonClick(): void {
         this.setState({ open: !this.state.open });
     }
 
-    handleKeyDown(event: React.KeyboardEvent) {
+    onKeyUp(event: React.KeyboardEvent): void {
         if (event.key === "Escape") {
             this.setState({ open: false });
         }
     }
 
-    render() {
+    render(): JSX.Element {
         return (
             <>
                 <div
-                    className="widget-timepicker"
+                    className="widget-time-picker"
                     tabIndex={-1}
-                    onFocusCapture={this.handleFocus}
-                    onBlurCapture={this.queueBlur}
-                    onKeyDownCapture={this.handleKeyDown}
+                    onFocusCapture={this.onFocusHandler}
+                    onBlurCapture={this.queueBlurHandler}
+                    onKeyUpCapture={this.onKeyUpHandler}
                 >
                     <Datetime
-                        className="widget-timepicker-input"
+                        className="widget-time-picker-input"
                         value={this.value}
-                        onChange={this.handleChange}
+                        onChange={this.onChangeHandler}
                         dateFormat={false}
                         timeFormat={this.useNativeInput ? "HH:mm" : this.format}
                         open={this.useNativeInput ? false : this.state.open}
@@ -179,16 +174,16 @@ export class TimePicker extends React.Component<Props, State> {
         );
     }
 
-    renderButton() {
+    renderButton(): false | JSX.Element {
         return (
             !this.useNativeInput && (
                 <button
                     type="button"
-                    className="btn mx-button widget-timepicker-button"
+                    className="btn mx-button widget-time-picker-button"
                     aria-label="Show time picker"
                     tabIndex={-1}
                     disabled={this.disabled}
-                    onClick={this.handleButtonClick}
+                    onClick={this.onButtonClickHandler}
                 >
                     <span className="glyphicon glyphicon-time" />
                 </button>
@@ -196,7 +191,7 @@ export class TimePicker extends React.Component<Props, State> {
         );
     }
 
-    renderValidationMessages() {
+    renderValidationMessages(): JSX.Element[] {
         return this.validation.map(message => (
             <div key={message} className="alert alert-danger mx-validation-message">
                 {message}
@@ -212,22 +207,22 @@ export class TimePicker extends React.Component<Props, State> {
     }
 }
 
-function useNativeInput(props: Props) {
+function useNativeInput(props: Props): boolean {
     return props.timeFormat === "minutes" && isMobileDevice() && supportsNativeInputType("time");
 }
 
-function isMobileDevice() {
+function isMobileDevice(): boolean {
     return /(iPhone|iPod|iPad|Android|Windows Phone)/.test(navigator.userAgent);
 }
 
-function supportsNativeInputType(type: string) {
+function supportsNativeInputType(type: string): boolean {
     const input = document.createElement("input");
     input.type = type;
     input.value = ":)";
     return input.type === type && input.value !== ":)";
 }
 
-function timeFormat(detail: "minutes" | "seconds", use12HourNotation: boolean) {
+function timeFormat(detail: "minutes" | "seconds", use12HourNotation: boolean): string {
     const hourFormat = use12HourNotation ? "hh" : "HH";
     const seconds = detail === "seconds" ? ":ss" : "";
     const suffix = use12HourNotation ? " A" : "";
@@ -235,11 +230,11 @@ function timeFormat(detail: "minutes" | "seconds", use12HourNotation: boolean) {
     return `${hourFormat}:mm${seconds}${suffix}`;
 }
 
-function humanReadableFormat(format: string) {
+function humanReadableFormat(format: string): string {
     return format.replace(" A", " AM/PM");
 }
 
-function use12HourNotation() {
+function use12HourNotation(): boolean {
     const dojo = (window as any).dojo as { locale: string } | undefined;
 
     const localesWith12HourNotation = [
@@ -264,4 +259,4 @@ function use12HourNotation() {
 }
 
 // tslint:disable-next-line:no-default-export
-export default hot(module)(TimePicker);
+export default hot(TimePicker);

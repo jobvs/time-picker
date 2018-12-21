@@ -67,7 +67,7 @@ describe("TimePicker", () => {
     });
 
     describe("onEnter", () => {
-        it("is called", () => {
+        it("is called on input focus", () => {
             const mock = jest.fn();
             const el = setup({
                 onEnter: createActionValue(mock)
@@ -120,17 +120,4 @@ describe("TimePicker", () => {
             expect(mock).toHaveBeenCalledTimes(1);
         });
     });
-
-    // describe("onLeave", () => {
-    //     it("is called", () => {
-    //         const mock = jest.fn();
-    //         const el = setup({ onLeave: createActionValue(mock) });
-    //         const wrapper = mount(el);
-    //         wrapper.find("input").simulate("focus");
-    //         expect(wrapper.find(".rdtPicker").length).toBe(1);
-    //         wrapper.simulate("click");
-    //         expect(wrapper.find(".rdtPicker").length).toBe(0);
-    //         expect(mock).toHaveBeenCalledTimes(1);
-    //     });
-    // });
 });

@@ -33,6 +33,7 @@
         "prefer-function-over-method": [true, "allow-public", "allow-protected"],
         "prefer-readonly": true,
         "prefer-while": true,
+        "typedef": [true, "call-signature"],
         "variable-name": [true, "ban-keywords"]
     }
 }

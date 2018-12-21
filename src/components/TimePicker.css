@@ -1,26 +1,26 @@
-.widget-timepicker {
+.widget-time-picker {
     display: flex;
     outline: none;
 }
 
-.widget-timepicker-input {
+.widget-time-picker-input {
     flex: 1 0 auto;
 }
 
 /* Input height is different on mobile devices */
 @media only screen and (-webkit-min-device-pixel-ratio: 0) and (max-device-width: 1024px) {
-    .widget-timepicker-input input {
+    .widget-time-picker-input input {
         min-height: 38px;
         line-height: 20px;
     }
 }
 
-.widget-timepicker-button {
+.widget-time-picker-button {
     flex: 0 1 auto;
     margin-left: 5px;
 }
 
-.widget-timepicker .rdtPicker {
+.widget-time-picker .rdtPicker {
     width: auto;
     font-size: 12px;
     border: 1px solid #d1d6e4;
@@ -31,7 +31,7 @@
     margin-top: 0;
 }
 
-.widget-timepicker .rdtBtn {
+.widget-time-picker .rdtBtn {
     color: #0595db;
     font-size: 11px;
 }

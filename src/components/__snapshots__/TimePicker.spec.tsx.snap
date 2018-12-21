@@ -2,14 +2,14 @@
 
 exports[`TimePicker snapshots should render 12-hour notation 1`] = `
 <div
-  className="widget-timepicker"
+  className="widget-time-picker"
   onBlurCapture={[Function]}
   onFocusCapture={[Function]}
-  onKeyDownCapture={[Function]}
+  onKeyUpCapture={[Function]}
   tabIndex={-1}
 >
   <div
-    className="rdt widget-timepicker-input"
+    className="rdt widget-time-picker-input"
   >
     <input
       className="form-control"
@@ -149,7 +149,7 @@ exports[`TimePicker snapshots should render 12-hour notation 1`] = `
   </div>
   <button
     aria-label="Show time picker"
-    className="btn mx-button widget-timepicker-button"
+    className="btn mx-button widget-time-picker-button"
     disabled={false}
     onClick={[Function]}
     tabIndex={-1}
@@ -164,14 +164,14 @@ exports[`TimePicker snapshots should render 12-hour notation 1`] = `
 
 exports[`TimePicker snapshots should render a default human readable placeholder 1`] = `
 <div
-  className="widget-timepicker"
+  className="widget-time-picker"
   onBlurCapture={[Function]}
   onFocusCapture={[Function]}
-  onKeyDownCapture={[Function]}
+  onKeyUpCapture={[Function]}
   tabIndex={-1}
 >
   <div
-    className="rdt widget-timepicker-input"
+    className="rdt widget-time-picker-input"
   >
     <input
       className="form-control"
@@ -288,7 +288,7 @@ exports[`TimePicker snapshots should render a default human readable placeholder
   </div>
   <button
     aria-label="Show time picker"
-    className="btn mx-button widget-timepicker-button"
+    className="btn mx-button widget-time-picker-button"
     disabled={false}
     onClick={[Function]}
     tabIndex={-1}
@@ -303,14 +303,14 @@ exports[`TimePicker snapshots should render a default human readable placeholder
 
 exports[`TimePicker snapshots should render the structure 1`] = `
 <div
-  className="widget-timepicker"
+  className="widget-time-picker"
   onBlurCapture={[Function]}
   onFocusCapture={[Function]}
-  onKeyDownCapture={[Function]}
+  onKeyUpCapture={[Function]}
   tabIndex={-1}
 >
   <div
-    className="rdt widget-timepicker-input"
+    className="rdt widget-time-picker-input"
   >
     <input
       className="form-control"
@@ -427,7 +427,7 @@ exports[`TimePicker snapshots should render the structure 1`] = `
   </div>
   <button
     aria-label="Show time picker"
-    className="btn mx-button widget-timepicker-button"
+    className="btn mx-button widget-time-picker-button"
     disabled={false}
     onClick={[Function]}
     tabIndex={-1}
@@ -443,14 +443,14 @@ exports[`TimePicker snapshots should render the structure 1`] = `
 exports[`TimePicker snapshots should render validation messages 1`] = `
 Array [
   <div
-    className="widget-timepicker"
+    className="widget-time-picker"
     onBlurCapture={[Function]}
     onFocusCapture={[Function]}
-    onKeyDownCapture={[Function]}
+    onKeyUpCapture={[Function]}
     tabIndex={-1}
   >
     <div
-      className="rdt widget-timepicker-input"
+      className="rdt widget-time-picker-input"
     >
       <input
         className="form-control"
@@ -567,7 +567,7 @@ Array [
     </div>
     <button
       aria-label="Show time picker"
-      className="btn mx-button widget-timepicker-button"
+      className="btn mx-button widget-time-picker-button"
       disabled={false}
       onClick={[Function]}
       tabIndex={-1}
@@ -593,14 +593,14 @@ Array [
 
 exports[`TimePicker snapshots should render without a data attribute 1`] = `
 <div
-  className="widget-timepicker"
+  className="widget-time-picker"
   onBlurCapture={[Function]}
   onFocusCapture={[Function]}
-  onKeyDownCapture={[Function]}
+  onKeyUpCapture={[Function]}
   tabIndex={-1}
 >
   <div
-    className="rdt widget-timepicker-input"
+    className="rdt widget-time-picker-input"
   >
     <input
       className="form-control"
@@ -717,7 +717,7 @@ exports[`TimePicker snapshots should render without a data attribute 1`] = `
   </div>
   <button
     aria-label="Show time picker"
-    className="btn mx-button widget-timepicker-button"
+    className="btn mx-button widget-time-picker-button"
     disabled={true}
     onClick={[Function]}
     tabIndex={-1}

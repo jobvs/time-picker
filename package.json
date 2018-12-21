@@ -1,5 +1,5 @@
 {
-    "name": "timepicker",
+    "name": "time-picker",
     "version": "1.0.0",
     "description": "Input widget to select a time value",
     "copyright": "Mendix BV",
@@ -10,7 +10,7 @@
     },
     "config": {
         "widgetName": "TimePicker",
-        "projectPath": "/Users/job.van.stiphout/Documents/Mendix/Timepicker-main",
+        "projectPath": "./dist/MxProject",
         "packagePath": "mendix"
     },
     "scripts": {
