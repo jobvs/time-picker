@@ -1,174 +1,266 @@
 import moment from "moment";
-import * as React from "react";
+import React from "react";
 import Datetime from "react-datetime";
 import { hot } from "react-hot-loader";
 
 import "react-datetime/css/react-datetime.css";
 
-import "../ui/TimePicker.css";
-import { Label } from "./Label";
+import "./TimePicker.css";
 
-export interface Props {
-    name: string;
-    class?: string;
-    style?: React.CSSProperties;
-    tabIndex?: number;
-
-    showLabel: boolean;
-    labelCaption: string;
-    labelOrientation: "horizontal" | "vertical";
-    labelWidth: number;
-
-    timeFormat: "minutes" | "seconds" | "milliseconds";
-    timeNotation: "h12" | "h24";
-    inputValue?: PluginWidget.EditableValue<Date | undefined>;
-    editable: "default" | "never";
-    placeholder: PluginWidget.DynamicValue<string>;
-
-    hoursStep?: number;
-    minutesStep?: number;
-    secondsStep?: number;
-
+interface ActionProps {
     onChange?: PluginWidget.ActionValue;
     onEnter?: PluginWidget.ActionValue;
     onLeave?: PluginWidget.ActionValue;
 }
 
+export interface Props extends ActionProps {
+    id: string;
+    tabIndex?: number;
+    timeFormat: "minutes" | "seconds";
+    inputValue?: PluginWidget.EditableValue<Date | undefined>;
+    editable: "default" | "never";
+    placeholder: PluginWidget.DynamicValue<string>;
+    validationMessage: PluginWidget.DynamicValue<string>;
+}
+
 interface State {
-    invalidInput: boolean;
+    readonly invalidInput: boolean;
+    readonly open: boolean;
 }
 
 export class TimePicker extends React.Component<Props, State> {
-    state: State = {
-        invalidInput: false
+    readonly state: State = {
+        invalidInput: false,
+        open: false
     };
+
+    private readonly use12HourNotation = use12HourNotation();
+    private readonly useNativeInput = useNativeInput(this.props);
+
+    private blurTimeoutRef: number | undefined;
 
     constructor(props: Props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleFocus = this.handleFocus.bind(this);
+        this.queueBlur = this.queueBlur.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
+        this.handleButtonClick = this.handleButtonClick.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
+    }
+
+    get value() {
+        return this.props.inputValue && this.props.inputValue.value;
+    }
+
+    get validation() {
+        return (this.props.inputValue && this.props.inputValue.validation) || [];
+    }
+
+    get disabled() {
+        return this.props.editable === "never" || !this.props.inputValue || this.props.inputValue.readOnly;
+    }
+
+    get placeholder() {
+        return !this.props.inputValue
+            ? "No attribute selected"
+            : this.props.placeholder.value || humanReadableFormat(this.format);
+    }
+
+    get format() {
+        return timeFormat(this.props.timeFormat, this.use12HourNotation);
     }
 
     handleFocus() {
-        if (this.props.onEnter && this.props.onEnter.canExecute) {
-            this.props.onEnter.execute();
+        const alreadyFocused = this.blurTimeoutRef !== undefined;
+
+        if (alreadyFocused) {
+            clearTimeout(this.blurTimeoutRef);
+            this.blurTimeoutRef = undefined;
+        } else {
+            this.dispatchAction("onEnter");
+        }
+    }
+
+    queueBlur() {
+        if (this.blurTimeoutRef === undefined) {
+            this.blurTimeoutRef = setTimeout(() => {
+                this.blurTimeoutRef = undefined;
+                this.handleBlur();
+            }, 0);
         }
     }
 
     handleBlur() {
         if (this.state.invalidInput && this.props.inputValue) {
-            this.props.inputValue.setValidation("Invalid time");
+            const format = humanReadableFormat(this.format);
+            this.props.inputValue.setValidation(
+                `${this.props.validationMessage.value || "Expected format:"} ${format}`
+            );
             this.setState({ invalidInput: true });
         }
 
-        if (this.props.onLeave && this.props.onLeave.canExecute) {
-            this.props.onLeave.execute();
+        if (this.state.open) {
+            this.setState({ open: false });
         }
+
+        this.dispatchAction("onLeave");
     }
 
     handleChange(input: string | moment.Moment) {
-        if (this.props.inputValue === undefined) {
-            return;
+        if (typeof input === "string") {
+            this.handleStringInput(input);
+        } else {
+            this.setValue(input.toDate());
         }
+    }
 
-        if (typeof input === "string" && input.length > 0) {
+    handleStringInput(value: string) {
+        const invalidInput = value.length > 0;
+
+        if (invalidInput) {
             this.setState({ invalidInput: true });
+        } else {
+            this.setValue(undefined);
+        }
+    }
+
+    private setValue(value: Date | undefined) {
+        if (!this.props.inputValue) {
             return;
         }
 
-        const value = typeof input === "string" ? undefined : input.toDate();
-        this.props.inputValue.setValidation();
         this.props.inputValue.setValue(value);
+        this.props.inputValue.setValidation();
         this.setState({ invalidInput: false });
+        this.dispatchAction("onChange");
+    }
 
-        if (this.props.onChange && this.props.onChange.canExecute) {
-            this.props.onChange.execute();
+    handleButtonClick() {
+        this.setState({ open: !this.state.open });
+    }
+
+    handleKeyDown(event: React.KeyboardEvent) {
+        if (event.key === "Escape") {
+            this.setState({ open: false });
         }
     }
 
     render() {
         return (
-            <div className={this.props.class} style={this.props.style}>
-                {this.props.showLabel ? this.renderInputWithLabel() : this.renderInput()}
-            </div>
-        );
-    }
-
-    renderInputWithLabel() {
-        const hasError =
-            this.props.inputValue && this.props.inputValue.validation
-                ? this.props.inputValue.validation.length > 0
-                : false;
-
-        return (
-            <Label
-                label={this.props.labelCaption}
-                orientation={this.props.labelOrientation}
-                width={this.props.labelWidth}
-                hasError={hasError}
-            >
-                {this.renderInput()}
-            </Label>
-        );
-    }
-
-    renderInput() {
-        const placeholder = !this.props.inputValue ? "No attribute selected" : this.props.placeholder.value;
-        const disabled = this.props.editable === "never" || !this.props.inputValue || this.props.inputValue.readOnly;
-        const validation = (this.props.inputValue && this.props.inputValue.validation) || [];
-        const value = this.props.inputValue && this.props.inputValue.value;
-
-        return (
             <>
-                <div className="widget-timepicker">
+                <div
+                    className="widget-timepicker"
+                    tabIndex={-1}
+                    onFocusCapture={this.handleFocus}
+                    onBlurCapture={this.queueBlur}
+                    onKeyDownCapture={this.handleKeyDown}
+                >
                     <Datetime
-                        value={value}
+                        className="widget-timepicker-input"
+                        value={this.value}
                         onChange={this.handleChange}
-                        onFocus={this.handleFocus}
-                        onBlur={this.handleBlur}
                         dateFormat={false}
-                        timeFormat={timeFormat(this.props.timeNotation, this.props.timeFormat)}
-                        timeConstraints={timeConstraints(
-                            this.props.hoursStep,
-                            this.props.minutesStep,
-                            this.props.secondsStep
-                        )}
+                        timeFormat={this.useNativeInput ? "HH:mm" : this.format}
+                        open={this.useNativeInput ? false : this.state.open}
                         inputProps={{
+                            id: this.props.id,
                             className: "form-control",
-                            name: this.props.name,
                             tabIndex: this.props.tabIndex,
-                            placeholder,
-                            disabled
+                            placeholder: this.placeholder,
+                            disabled: this.disabled,
+                            type: this.useNativeInput ? "time" : "text"
                         }}
                     />
-                    <span className="glyphicon glyphicon-time form-control-feedback" aria-hidden="true" />
+                    {this.renderButton()}
                 </div>
-                {validation.map(message => (
-                    <div key={message} className="alert alert-danger mx-validation-message">
-                        {message}
-                    </div>
-                ))}
+                {this.renderValidationMessages()}
             </>
         );
     }
+
+    renderButton() {
+        return (
+            !this.useNativeInput && (
+                <button
+                    type="button"
+                    className="btn mx-button widget-timepicker-button"
+                    aria-label="Show time picker"
+                    tabIndex={-1}
+                    disabled={this.disabled}
+                    onClick={this.handleButtonClick}
+                >
+                    <span className="glyphicon glyphicon-time" />
+                </button>
+            )
+        );
+    }
+
+    renderValidationMessages() {
+        return this.validation.map(message => (
+            <div key={message} className="alert alert-danger mx-validation-message">
+                {message}
+            </div>
+        ));
+    }
+
+    private dispatchAction(property: keyof ActionProps): void {
+        const prop = this.props[property];
+        if (prop && this.props.inputValue && this.props.inputValue.status === PluginWidget.ValueStatus.Available) {
+            prop.execute();
+        }
+    }
 }
 
-function timeConstraints(hoursStep?: number, minutesStep?: number, secondsStep?: number) {
-    return {
-        hours: { step: hoursStep || 1, min: 0, max: 23 },
-        minutes: { step: minutesStep || 1, min: 0, max: 59 },
-        seconds: { step: secondsStep || 1, min: 0, max: 59 }
-    };
+function useNativeInput(props: Props) {
+    return props.timeFormat === "minutes" && isMobileDevice() && supportsNativeInputType("time");
 }
 
-function timeFormat(notation: "h12" | "h24", detail: "minutes" | "seconds" | "milliseconds") {
-    const hourFormat = notation === "h12" ? "hh" : "HH";
+function isMobileDevice() {
+    return /(iPhone|iPod|iPad|Android|Windows Phone)/.test(navigator.userAgent);
+}
+
+function supportsNativeInputType(type: string) {
+    const input = document.createElement("input");
+    input.type = type;
+    input.value = ":)";
+    return input.type === type && input.value !== ":)";
+}
+
+function timeFormat(detail: "minutes" | "seconds", use12HourNotation: boolean) {
+    const hourFormat = use12HourNotation ? "hh" : "HH";
     const seconds = detail === "seconds" ? ":ss" : "";
-    const milliseconds = detail === "milliseconds" ? ":ss.SSS" : "";
-    const suffix = notation === "h12" ? " A" : "";
+    const suffix = use12HourNotation ? " A" : "";
 
-    return `${hourFormat}:mm${seconds}${milliseconds}${suffix}`;
+    return `${hourFormat}:mm${seconds}${suffix}`;
+}
+
+function humanReadableFormat(format: string) {
+    return format.replace(" A", " AM/PM");
+}
+
+function use12HourNotation() {
+    const dojo = (window as any).dojo as { locale: string } | undefined;
+
+    const localesWith12HourNotation = [
+        "en-au",
+        "en-ca",
+        "en-in",
+        "en-mt",
+        "en-nz",
+        "en-ph",
+        "en-sg",
+        "en-za",
+        "en-us",
+        "el-cy",
+        "el-gr",
+        "hi-in",
+        "ko-kr",
+        "es-do",
+        "es-us"
+    ];
+
+    return dojo ? localesWith12HourNotation.indexOf(dojo.locale) !== -1 : false;
 }
 
 // tslint:disable-next-line:no-default-export

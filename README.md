@@ -9,11 +9,10 @@ Input widget to select a time value
 
 -   Change the notation of the selected time
 -   Execute actions on enter, on change, and on leave
--   Add a label to the input
 
 ## Dependencies
 
-Mendix 7.13.1
+Mendix 7.23.0
 
 ## Usage
 

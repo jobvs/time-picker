@@ -9,5 +9,5 @@ export class preview extends React.Component<TimePickerProps, {}> {
 }
 
 export function getPreviewCss() {
-    return require("./ui/TimePicker.css") + require("react-datetime/css/react-datetime.css");
+    return require("./components/TimePicker.css") + require("react-datetime/css/react-datetime.css");
 }

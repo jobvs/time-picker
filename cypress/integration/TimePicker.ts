@@ -9,19 +9,19 @@ describe("TimePicker", () => {
         });
 
         it("should show the correct value", () => {
-            cy.get("input").should("have.value", "01:00:00 AM");
+            cy.get("input").should("have.value", "01:00");
         });
     });
 
-    describe("on focus", () => {
+    describe("on button click", () => {
         it("should show the time picker", () => {
-            cy.get("input").focus();
+            cy.get("button").click();
             cy.get(".rdtPicker").should("be.visible");
         });
 
         it("should emit an onEnter event", () => {
             addEmitActionSpy();
-            cy.get("input").focus();
+            cy.get("button").click();
             getEmittedActionName().should("equal", "onEnter");
         });
     });
@@ -43,13 +43,13 @@ describe("TimePicker", () => {
 
     describe("controls", () => {
         it("should add an hour", () => {
-            cy.get("input").focus();
+            cy.get("button").click();
             cy.get(".rdtCounter:nth-of-type(1) .rdtBtn:first-child").click();
-            cy.get("input").should("have.value", "02:00:00 AM");
+            cy.get("input").should("have.value", "02:00");
         });
 
         it("should emit an onChange event", () => {
-            cy.get("input").focus();
+            cy.get("button").click();
             addEmitActionSpy();
             cy.get(".rdtCounter:nth-of-type(1) .rdtBtn:first-child").click();
             getEmittedActionName().should("equal", "onChange");
@@ -73,10 +73,10 @@ describe("TimePicker", () => {
         it("valid format sets the date", () => {
             cy.get("input")
                 .clear()
-                .type("02:05:01 P");
+                .type("02:05");
             cy.get("body").click("topRight");
             cy.get(".alert-danger").should("not.exist");
-            cy.get("input").should("have.value", "02:05:01 PM");
+            cy.get("input").should("have.value", "02:05");
         });
     });
 });

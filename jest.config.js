@@ -21,15 +21,13 @@ module.exports = {
     collectCoverage: true,
 
     // An array of glob patterns indicating a set of files for which coverage information should be collected
-    // collectCoverageFrom: null,
+    collectCoverageFrom: ["src/components/**/*.ts?(x)"],
 
     // The directory where Jest should output its coverage files
-    coverageDirectory: "../coverage",
+    coverageDirectory: "<rootDir>/coverage",
 
     // An array of regexp pattern strings used to skip coverage collection
-    // coveragePathIgnorePatterns: [
-    //   "/node_modules/"
-    // ],
+    coveragePathIgnorePatterns: ["/node_modules/", "/*.spec.ts/"],
 
     // A list of reporter names that Jest uses when writing coverage reports
     // coverageReporters: ["json", "text", "lcov", "clover"],
@@ -67,7 +65,7 @@ module.exports = {
 
     // A map from regular expressions to module names that allow to stub out resources with a single module
     moduleNameMapper: {
-        "\\.css$": "<rootDir>/__mocks__/ImportStyle.ts"
+        "\\.css$": "<rootDir>/tests/mocks/ImportStyle.ts"
     },
 
     // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -101,7 +99,7 @@ module.exports = {
     // restoreMocks: false,
 
     // The root directory that Jest should scan for tests and modules within
-    rootDir: "./src"
+    rootDir: "./",
 
     // A list of paths to directories that Jest should use to search for files in
     // roots: [
@@ -115,7 +113,7 @@ module.exports = {
     // setupFiles: [],
 
     // The path to a module that runs some code to configure or set up the testing framework before each test
-    // setupTestFrameworkScriptFile: null,
+    setupTestFrameworkScriptFile: "<rootDir>/tests/setupTests.ts",
 
     // A list of paths to snapshot serializer modules Jest should use for snapshot testing
     // snapshotSerializers: [],
@@ -130,10 +128,10 @@ module.exports = {
     // testLocationInResults: false,
 
     // The glob patterns Jest uses to detect test files
-    // testMatch: [
-    //   "**/__tests__/**/*.js?(x)",
-    //   "**/?(*.)+(spec|test).js?(x)"
-    // ],
+    testMatch: [
+        //   "**/__tests__/**/*.js?(x)",
+        "**/?(*.)+(spec|test).ts?(x)"
+    ]
 
     // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
     // testPathIgnorePatterns: [
